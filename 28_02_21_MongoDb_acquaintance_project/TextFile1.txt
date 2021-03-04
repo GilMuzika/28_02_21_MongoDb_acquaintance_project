@@ -1,0 +1,54 @@
+﻿           
+
+            _driverWhenEdited = (_cmbEditAllDriversSelectedItem as ComboDriver).Driver;
+            Bitmap image = ImageProvider.ByteArrayToBitmap(_driverWhenEdited.Image);
+            pbxEditDrivers.Width = image.Width;
+            pbxEditDrivers.Height = image.Height;
+            pbxEditDrivers.Image = image;
+
+            txtChangeDriverFirstname.Text = _driverWhenEdited.FirstName;
+            txtChangeDriverLastName.Text = _driverWhenEdited.Lastname;
+            cmbChangeDriverCars.Items.Clear();
+            _driverWhenEdited.CarIds.ForEach(x => cmbChangeDriverCars.Items.Add(new ComboCar(_connector.GetDocumentById<CarModel>("Cars", x))));
+            cmbChangeDriverCars.SelectedItem = cmbChangeDriverCars.Items[_rnd.Next(cmbChangeDriverCars.Items.Count - 1)];
+            txtChangeDriverCarLicense.Text = (cmbChangeDriverCars.SelectedItem as ComboCar).License;
+            cmbChangeDriverCars.SelectedIndexChanged += (object sender2, EventArgs e2) =>
+            {
+                txtChangeDriverCarLicense.Text = ((sender2 as ComboBox).SelectedItem as ComboCar).License;
+            };
+            pnlLongNumberChangeDriverIDCertificate.Number = _driverWhenEdited.IdentityNumber;
+
+            if (_driverWhenEdited.RouteIds != null)
+            {
+                cmbChangeDriverRoutes1.Enabled = cmbChangeDriverRoutes2.Enabled = true;
+                cmbChangeDriverRoutes1.Text = cmbChangeDriverRoutes2.Text = string.Empty;
+                btnSaveDriverRoutes.Enabled = btnDeleteDriverRoutes.Enabled = true;
+                cmbChangeDriverRoutes1.Items.Clear();
+                cmbChangeDriverRoutes2.Items.Clear();
+                List<RouteModel> driverRoutes = new List<RouteModel>();
+                _driverWhenEdited.RouteIds.ForEach(x => driverRoutes.Add(_connector.GetDocumentById<RouteModel>("Routes", x)));
+                foreach (var s in driverRoutes)
+                {
+                    cmbChangeDriverRoutes1.Items.Add(new ComboRoute(s, IsDeparture.Departure));
+                    cmbChangeDriverRoutes2.Items.Add(new ComboRoute(s, IsDeparture.Destination));
+                }
+                cmbChangeDriverRoutes1.SelectedIndexChanged += (object sender2, EventArgs e2) =>
+                {
+                    cmbChangeDriverRoutes2.SelectedItem = cmbChangeDriverRoutes2.Items[cmbChangeDriverRoutes1.SelectedIndex];
+                    _cmbChangeDriverRoutes1SelectedIndex = cmbChangeDriverRoutes1.SelectedIndex;
+                };
+                cmbChangeDriverRoutes2.SelectedIndexChanged += (object sender2, EventArgs e2) =>
+                {
+                    cmbChangeDriverRoutes1.SelectedItem = cmbChangeDriverRoutes1.Items[cmbChangeDriverRoutes2.SelectedIndex];
+                };
+
+
+            }
+            else
+            {
+                cmbChangeDriverRoutes1.Enabled = cmbChangeDriverRoutes2.Enabled = false;
+                cmbChangeDriverRoutes1.Text = cmbChangeDriverRoutes2.Text = "this driver has no routes";
+                btnSaveDriverRoutes.Enabled = btnDeleteDriverRoutes.Enabled = false;
+            }
+
+            InitializeEditDriversTab();
