@@ -38,7 +38,6 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.cmbCars = new System.Windows.Forms.ComboBox();
             this.btnAddDriver = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.pnlLongNumberCreatorIdNumber = new _28_02_21_MongoDb_acquaintance_project.pnlLongNumberCreatorPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,7 +50,6 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbTaxiManufacturer = new System.Windows.Forms.ComboBox();
-            this.pnlLongNumberCreatorTaxiLicenseNumber = new _28_02_21_MongoDb_acquaintance_project.pnlLongNumberCreatorPanel();
             this.addRouteTab = new System.Windows.Forms.TabPage();
             this.btnAddRoute = new System.Windows.Forms.Button();
             this.txtDestinationAddress = new System.Windows.Forms.TextBox();
@@ -80,7 +78,23 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.label11 = new System.Windows.Forms.Label();
             this.pbxEditDrivers = new System.Windows.Forms.PictureBox();
             this.cmbEditAllDrivers = new System.Windows.Forms.ComboBox();
+            this.editTaxiesTab = new System.Windows.Forms.TabPage();
+            this.cmbEditTaxies = new System.Windows.Forms.ComboBox();
+            this.txtEditTaxiesManufacturer = new System.Windows.Forms.TextBox();
+            this.txtEditTaxiesLicense = new System.Windows.Forms.TextBox();
+            this.cmbEditTaxiesDrivers = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.btnEditTaxiesRemoveDriver = new System.Windows.Forms.Button();
+            this.btnEditTaxiesSaveTheCar = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cmbEditTaxiesDriversAllDrivers = new System.Windows.Forms.ComboBox();
+            this.btnEditTaxiesAddDriver = new System.Windows.Forms.Button();
+            this.pnlLongNumberCreatorIdNumber = new _28_02_21_MongoDb_acquaintance_project.pnlLongNumberCreatorPanel();
+            this.pnlLongNumberCreatorTaxiLicenseNumber = new _28_02_21_MongoDb_acquaintance_project.pnlLongNumberCreatorPanel();
             this.pnlLongNumberChangeDriverIDCertificate = new _28_02_21_MongoDb_acquaintance_project.pnlLongNumberCreatorPanel();
+            this.label19 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.addDriverTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxDriverPicture)).BeginInit();
@@ -88,6 +102,7 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.addRouteTab.SuspendLayout();
             this.editDriversTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxEditDrivers)).BeginInit();
+            this.editTaxiesTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -96,6 +111,7 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.tabControl.Controls.Add(this.addTaxiTab);
             this.tabControl.Controls.Add(this.addRouteTab);
             this.tabControl.Controls.Add(this.editDriversTab);
+            this.tabControl.Controls.Add(this.editTaxiesTab);
             this.tabControl.Location = new System.Drawing.Point(12, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -184,17 +200,6 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.label3.Size = new System.Drawing.Size(94, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Identity Certificate:";
-            // 
-            // pnlLongNumberCreatorIdNumber
-            // 
-            this.pnlLongNumberCreatorIdNumber.Location = new System.Drawing.Point(6, 241);
-            this.pnlLongNumberCreatorIdNumber.Name = "pnlLongNumberCreatorIdNumber";
-            this.pnlLongNumberCreatorIdNumber.Number = "572181887";
-            this.pnlLongNumberCreatorIdNumber.NumberOfCombos = 9;
-            this.pnlLongNumberCreatorIdNumber.RandomInitialValue = true;
-            this.pnlLongNumberCreatorIdNumber.Size = new System.Drawing.Size(278, 21);
-            this.pnlLongNumberCreatorIdNumber.SplitToSections = false;
-            this.pnlLongNumberCreatorIdNumber.TabIndex = 5;
             // 
             // label2
             // 
@@ -304,17 +309,6 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.cmbTaxiManufacturer.Name = "cmbTaxiManufacturer";
             this.cmbTaxiManufacturer.Size = new System.Drawing.Size(208, 21);
             this.cmbTaxiManufacturer.TabIndex = 0;
-            // 
-            // pnlLongNumberCreatorTaxiLicenseNumber
-            // 
-            this.pnlLongNumberCreatorTaxiLicenseNumber.Location = new System.Drawing.Point(7, 88);
-            this.pnlLongNumberCreatorTaxiLicenseNumber.Name = "pnlLongNumberCreatorTaxiLicenseNumber";
-            this.pnlLongNumberCreatorTaxiLicenseNumber.Number = "280857";
-            this.pnlLongNumberCreatorTaxiLicenseNumber.NumberOfCombos = 6;
-            this.pnlLongNumberCreatorTaxiLicenseNumber.RandomInitialValue = true;
-            this.pnlLongNumberCreatorTaxiLicenseNumber.Size = new System.Drawing.Size(185, 21);
-            this.pnlLongNumberCreatorTaxiLicenseNumber.SplitToSections = false;
-            this.pnlLongNumberCreatorTaxiLicenseNumber.TabIndex = 3;
             // 
             // addRouteTab
             // 
@@ -587,6 +581,154 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.cmbEditAllDrivers.Size = new System.Drawing.Size(327, 21);
             this.cmbEditAllDrivers.TabIndex = 0;
             // 
+            // editTaxiesTab
+            // 
+            this.editTaxiesTab.Controls.Add(this.label19);
+            this.editTaxiesTab.Controls.Add(this.btnEditTaxiesAddDriver);
+            this.editTaxiesTab.Controls.Add(this.cmbEditTaxiesDriversAllDrivers);
+            this.editTaxiesTab.Controls.Add(this.label18);
+            this.editTaxiesTab.Controls.Add(this.btnEditTaxiesSaveTheCar);
+            this.editTaxiesTab.Controls.Add(this.btnEditTaxiesRemoveDriver);
+            this.editTaxiesTab.Controls.Add(this.label17);
+            this.editTaxiesTab.Controls.Add(this.label16);
+            this.editTaxiesTab.Controls.Add(this.label14);
+            this.editTaxiesTab.Controls.Add(this.cmbEditTaxiesDrivers);
+            this.editTaxiesTab.Controls.Add(this.txtEditTaxiesLicense);
+            this.editTaxiesTab.Controls.Add(this.txtEditTaxiesManufacturer);
+            this.editTaxiesTab.Controls.Add(this.cmbEditTaxies);
+            this.editTaxiesTab.Location = new System.Drawing.Point(4, 22);
+            this.editTaxiesTab.Name = "editTaxiesTab";
+            this.editTaxiesTab.Padding = new System.Windows.Forms.Padding(3);
+            this.editTaxiesTab.Size = new System.Drawing.Size(523, 450);
+            this.editTaxiesTab.TabIndex = 4;
+            this.editTaxiesTab.Text = "Edit Taxies";
+            this.editTaxiesTab.UseVisualStyleBackColor = true;
+            // 
+            // cmbEditTaxies
+            // 
+            this.cmbEditTaxies.FormattingEnabled = true;
+            this.cmbEditTaxies.Location = new System.Drawing.Point(17, 32);
+            this.cmbEditTaxies.Name = "cmbEditTaxies";
+            this.cmbEditTaxies.Size = new System.Drawing.Size(472, 21);
+            this.cmbEditTaxies.TabIndex = 0;
+            // 
+            // txtEditTaxiesManufacturer
+            // 
+            this.txtEditTaxiesManufacturer.Location = new System.Drawing.Point(17, 100);
+            this.txtEditTaxiesManufacturer.Name = "txtEditTaxiesManufacturer";
+            this.txtEditTaxiesManufacturer.Size = new System.Drawing.Size(167, 20);
+            this.txtEditTaxiesManufacturer.TabIndex = 1;
+            // 
+            // txtEditTaxiesLicense
+            // 
+            this.txtEditTaxiesLicense.Location = new System.Drawing.Point(17, 158);
+            this.txtEditTaxiesLicense.Name = "txtEditTaxiesLicense";
+            this.txtEditTaxiesLicense.Size = new System.Drawing.Size(167, 20);
+            this.txtEditTaxiesLicense.TabIndex = 2;
+            // 
+            // cmbEditTaxiesDrivers
+            // 
+            this.cmbEditTaxiesDrivers.FormattingEnabled = true;
+            this.cmbEditTaxiesDrivers.Location = new System.Drawing.Point(17, 221);
+            this.cmbEditTaxiesDrivers.Name = "cmbEditTaxiesDrivers";
+            this.cmbEditTaxiesDrivers.Size = new System.Drawing.Size(167, 21);
+            this.cmbEditTaxiesDrivers.TabIndex = 3;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(16, 84);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(73, 13);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "Manufacturer:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(16, 142);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(47, 13);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "License:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(19, 202);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(89, 13);
+            this.label17.TabIndex = 6;
+            this.label17.Text = "Drivers of this car";
+            // 
+            // btnEditTaxiesRemoveDriver
+            // 
+            this.btnEditTaxiesRemoveDriver.Location = new System.Drawing.Point(63, 249);
+            this.btnEditTaxiesRemoveDriver.Name = "btnEditTaxiesRemoveDriver";
+            this.btnEditTaxiesRemoveDriver.Size = new System.Drawing.Size(121, 23);
+            this.btnEditTaxiesRemoveDriver.TabIndex = 8;
+            this.btnEditTaxiesRemoveDriver.Text = "Remove from this car";
+            this.btnEditTaxiesRemoveDriver.UseVisualStyleBackColor = true;
+            this.btnEditTaxiesRemoveDriver.Click += new System.EventHandler(this.btnEditTaxiesRemoveDriver_Click);
+            // 
+            // btnEditTaxiesSaveTheCar
+            // 
+            this.btnEditTaxiesSaveTheCar.Location = new System.Drawing.Point(17, 316);
+            this.btnEditTaxiesSaveTheCar.Name = "btnEditTaxiesSaveTheCar";
+            this.btnEditTaxiesSaveTheCar.Size = new System.Drawing.Size(98, 23);
+            this.btnEditTaxiesSaveTheCar.TabIndex = 10;
+            this.btnEditTaxiesSaveTheCar.Text = "Save The Car";
+            this.btnEditTaxiesSaveTheCar.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(16, 16);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(105, 13);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "Choose a car to edit:";
+            // 
+            // cmbEditTaxiesDriversAllDrivers
+            // 
+            this.cmbEditTaxiesDriversAllDrivers.FormattingEnabled = true;
+            this.cmbEditTaxiesDriversAllDrivers.Location = new System.Drawing.Point(215, 220);
+            this.cmbEditTaxiesDriversAllDrivers.Name = "cmbEditTaxiesDriversAllDrivers";
+            this.cmbEditTaxiesDriversAllDrivers.Size = new System.Drawing.Size(274, 21);
+            this.cmbEditTaxiesDriversAllDrivers.TabIndex = 12;
+            // 
+            // btnEditTaxiesAddDriver
+            // 
+            this.btnEditTaxiesAddDriver.Location = new System.Drawing.Point(340, 248);
+            this.btnEditTaxiesAddDriver.Name = "btnEditTaxiesAddDriver";
+            this.btnEditTaxiesAddDriver.Size = new System.Drawing.Size(148, 23);
+            this.btnEditTaxiesAddDriver.TabIndex = 13;
+            this.btnEditTaxiesAddDriver.Text = "Add to this car";
+            this.btnEditTaxiesAddDriver.UseVisualStyleBackColor = true;
+            this.btnEditTaxiesAddDriver.Click += new System.EventHandler(this.btnEditTaxiesAddDriver_Click);
+            // 
+            // pnlLongNumberCreatorIdNumber
+            // 
+            this.pnlLongNumberCreatorIdNumber.Location = new System.Drawing.Point(6, 241);
+            this.pnlLongNumberCreatorIdNumber.Name = "pnlLongNumberCreatorIdNumber";
+            this.pnlLongNumberCreatorIdNumber.Number = "016376003";
+            this.pnlLongNumberCreatorIdNumber.NumberOfCombos = 9;
+            this.pnlLongNumberCreatorIdNumber.RandomInitialValue = true;
+            this.pnlLongNumberCreatorIdNumber.Size = new System.Drawing.Size(278, 21);
+            this.pnlLongNumberCreatorIdNumber.SplitToSections = false;
+            this.pnlLongNumberCreatorIdNumber.TabIndex = 5;
+            // 
+            // pnlLongNumberCreatorTaxiLicenseNumber
+            // 
+            this.pnlLongNumberCreatorTaxiLicenseNumber.Location = new System.Drawing.Point(7, 88);
+            this.pnlLongNumberCreatorTaxiLicenseNumber.Name = "pnlLongNumberCreatorTaxiLicenseNumber";
+            this.pnlLongNumberCreatorTaxiLicenseNumber.Number = "820084";
+            this.pnlLongNumberCreatorTaxiLicenseNumber.NumberOfCombos = 6;
+            this.pnlLongNumberCreatorTaxiLicenseNumber.RandomInitialValue = true;
+            this.pnlLongNumberCreatorTaxiLicenseNumber.Size = new System.Drawing.Size(185, 21);
+            this.pnlLongNumberCreatorTaxiLicenseNumber.SplitToSections = false;
+            this.pnlLongNumberCreatorTaxiLicenseNumber.TabIndex = 3;
+            // 
             // pnlLongNumberChangeDriverIDCertificate
             // 
             this.pnlLongNumberChangeDriverIDCertificate.Location = new System.Drawing.Point(10, 291);
@@ -597,6 +739,15 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.pnlLongNumberChangeDriverIDCertificate.Size = new System.Drawing.Size(278, 21);
             this.pnlLongNumberChangeDriverIDCertificate.SplitToSections = false;
             this.pnlLongNumberChangeDriverIDCertificate.TabIndex = 9;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(215, 202);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(52, 13);
+            this.label19.TabIndex = 14;
+            this.label19.Text = "All drivers";
             // 
             // Form1
             // 
@@ -617,6 +768,8 @@ namespace _28_02_21_MongoDb_acquaintance_project
             this.editDriversTab.ResumeLayout(false);
             this.editDriversTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxEditDrivers)).EndInit();
+            this.editTaxiesTab.ResumeLayout(false);
+            this.editTaxiesTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -675,6 +828,20 @@ namespace _28_02_21_MongoDb_acquaintance_project
         private System.Windows.Forms.Button btnSaveDriverRoutes;
         private System.Windows.Forms.Button btnAddDriverRoutes;
         private System.Windows.Forms.Button btnAddDriverCar;
+        private System.Windows.Forms.TabPage editTaxiesTab;
+        private System.Windows.Forms.ComboBox cmbEditTaxies;
+        private System.Windows.Forms.Button btnEditTaxiesSaveTheCar;
+        private System.Windows.Forms.Button btnEditTaxiesRemoveDriver;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cmbEditTaxiesDrivers;
+        private System.Windows.Forms.TextBox txtEditTaxiesLicense;
+        private System.Windows.Forms.TextBox txtEditTaxiesManufacturer;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cmbEditTaxiesDriversAllDrivers;
+        private System.Windows.Forms.Button btnEditTaxiesAddDriver;
+        private System.Windows.Forms.Label label19;
     }
 }
 

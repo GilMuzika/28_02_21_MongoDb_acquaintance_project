@@ -41,6 +41,8 @@ namespace _28_02_21_MongoDb_acquaintance_project
 
 
         private object _cmbEditAllDriversSelectedItem;
+        private object _cmbEditTaxiesSelectedItem;
+        private object _cmbEditTaxiesDriversAllDriversSelectedItem;
 
         private Dictionary<string, List<string>> _citiesAndStreetsForRoutes;
 
@@ -91,18 +93,19 @@ namespace _28_02_21_MongoDb_acquaintance_project
 
             };
 
+            cmbEditTaxies.SelectedIndexChanged += (object sender, EventArgs e) => 
+            {
+                cmbEditTaxiesSelectedIndexChanged(sender as ComboBox);
+            };
+
             txtChangeDriverCarLicense.KeyDown += (object sender, KeyEventArgs e) =>
             {
-                if (!_digitsKeys.Contains(e.KeyValue))
-                    e.SuppressKeyPress = true;
+                LicenseNumberTexBoxKeyDown(sender as TextBox, e);
+            };
 
-                if ((sender as TextBox).Text.Length >= 6)
-                {
-                    if (e.KeyValue != 8)
-                        e.SuppressKeyPress = true;
-
-                    else { (sender as TextBox).Text = string.Empty; }
-                }
+            txtEditTaxiesLicense.KeyDown += (object sender, KeyEventArgs e) =>
+            {
+                LicenseNumberTexBoxKeyDown(sender as TextBox, e);
             };
 
 
@@ -111,40 +114,24 @@ namespace _28_02_21_MongoDb_acquaintance_project
             InitializeAddDriversTab();
             InitializeAddRoutesTab();
             InitializeEditDriversTab();
+            InitializeEtitTaxiesTab();
 
 
             editDriversTab.Leave += async (object sender, EventArgs e) =>
             {
-                btnAddDriver.Enabled = false;
-
-                Task tsk = Task.Run(() =>
-                {
-                    Action act = () => cmbCars.Items.Clear();
-                    SafeInvoke(act, cmbCars);
-                    act = () => cmbCars.Items.AddRange(_connector.GetAllDocuments<CarModel>("Cars").Select(_ => new ComboCar(_)).ToArray());
-                    SafeInvoke(act, cmbCars);
-                    act = () => cmbCars.SelectedItem = cmbCars.Items[_rnd.Next(cmbCars.Items.Count - 1)];
-                    SafeInvoke(act, cmbCars);
-                    act = () =>  cmbRoutes.Items.Clear();
-                    SafeInvoke(act, cmbCars);
-                    act = () => cmbRoutes.Items.AddRange(_connector.GetAllDocuments<RouteModel>("Routes").Select(_ => new ComboRoute(_)).ToArray());
-                    SafeInvoke(act, cmbCars);
-                    act = () => cmbRoutes.SelectedItem = cmbRoutes.Items[_rnd.Next(cmbRoutes.Items.Count - 1)];
-                    SafeInvoke(act, cmbCars);
-
-                    act = () =>
-                    {
-                        _driverCarIDs.Add((cmbCars.SelectedItem as ComboCar).Car.Id);
-                        _driverRouteIDs.Add((cmbRoutes.SelectedItem as ComboRoute).Route.Id);
-                    };
-                    SafeInvoke(act, this);
-                    
-                });
-
-                await tsk;
-                if (tsk.IsCompleted) btnAddDriver.Enabled = true;
-
+                await editDriversTabLeave();
             };
+
+            editTaxiesTab.Leave += async (object sender, EventArgs e) =>
+            {
+                await editDriversTabLeave();
+            };
+
+            editTaxiesTab.Enter += (object sender, EventArgs e) =>
+            {
+                InitializeEtitTaxiesTab();
+            };
+
             btnAddDriver.Click += (object sender, EventArgs e) =>
             {
 
@@ -313,10 +300,26 @@ namespace _28_02_21_MongoDb_acquaintance_project
 
                 _connector.UpdateDocument("Drivers", _driverWhenEdited.Id, _driverWhenEdited);
 
-                cmbEditAllDriversSelectedIndexChanged(cmbEditAllDrivers, new EventArgs());
-
-
+                cmbEditAllDriversSelectedIndexChanged(cmbEditAllDrivers, new EventArgs());                
             };
+
+            btnAddDriverCar.MouseHover += (object sender, EventArgs e) => 
+            {
+                cmbChangeDriverCars.Text = _cars[_rnd.Next(_cars.Length - 1)];
+                string license = "";
+                for(int i = 0; i < 6; i++)
+                    license += _rnd.Next(9).ToString();
+                
+                txtChangeDriverCarLicense.Text = license;  
+            };
+
+
+            cmbEditTaxiesDriversAllDrivers.SelectedIndexChanged += (object sender, EventArgs e) => 
+            {
+                _cmbEditTaxiesDriversAllDriversSelectedItem = (sender as ComboBox).SelectedItem;
+            };
+
+
         }
 
         private void cmbEditAllDriversSelectedIndexChanged(object sender, EventArgs e)
@@ -442,6 +445,63 @@ namespace _28_02_21_MongoDb_acquaintance_project
             cmbEditAllDrivers.Items.Clear();
             cmbEditAllDrivers.Items.AddRange(allDrivers);
             cmbEditAllDrivers.Text = "Choose driver";
+        }
+
+        private void InitializeEtitTaxiesTab()
+        {
+            cmbEditTaxies.Items.Clear();
+            var allTaxies = _connector.GetAllDocuments<CarModel>("Cars").Select(_ => new ComboCar(_)).ToArray();
+            cmbEditTaxies.Items.AddRange(allTaxies);
+            //cmbEditTaxiesDriversAllDrivers.Items.AddRange(cmbEditAllDrivers.Items.to);
+            foreach(ComboDriver s in cmbEditAllDrivers.Items)
+            {
+                cmbEditTaxiesDriversAllDrivers.Items.Add(s);
+            }
+        }
+
+        private void cmbEditTaxiesSelectedIndexChanged(ComboBox sender)
+        {
+            _cmbEditTaxiesSelectedItem = (sender.SelectedItem as ComboCar).Car;
+
+            CarModel car = (sender.SelectedItem as ComboCar).Car;
+
+            txtEditTaxiesManufacturer.Text = car.Manufacturer;
+            txtEditTaxiesLicense.Text = car.LicenseNumber;
+
+            if (car.DriverIds != null)
+            {
+                cmbEditTaxiesDrivers.Items.Clear();
+                foreach (var s in car.DriverIds)
+                    cmbEditTaxiesDrivers.Items.Add(new ComboDriver(_connector.GetDocumentById<DriverModel>("Drivers", s)));
+            }
+            else
+            {
+                cmbEditTaxiesDrivers.Text = "This car has no drivers";
+            }
+
+
+            for(int i = 0; i < cmbEditTaxiesDriversAllDrivers.Items.Count; i++)
+            {
+                if ((cmbEditTaxiesDriversAllDrivers.Items[i] as ComboDriver).Driver.CarIds.Contains(car.Id))
+                    cmbEditTaxiesDriversAllDrivers.Items.Remove(cmbEditTaxiesDriversAllDrivers.Items[i]);
+            }
+            
+
+            InitializeEtitTaxiesTab();
+        }
+
+        private void LicenseNumberTexBoxKeyDown(TextBox sender, KeyEventArgs e)
+        {
+            if (!_digitsKeys.Contains(e.KeyValue))
+                e.SuppressKeyPress = true;
+
+            if (sender.Text.Length >= 6)
+            {
+                if (e.KeyValue != 8)
+                    e.SuppressKeyPress = true;
+
+                else { sender.Text = string.Empty; }
+            }
         }
 
 
@@ -638,6 +698,76 @@ namespace _28_02_21_MongoDb_acquaintance_project
             _driverWhenEdited = null;
         }
 
+        private void btnEditTaxiesRemoveDriver_Click(object sender, EventArgs e)
+        {
+            var driver = (cmbEditTaxiesDrivers.SelectedItem as ComboDriver).Driver;
+            var comboDriver = cmbEditTaxiesDrivers.SelectedItem as ComboDriver;
+            var car = _cmbEditTaxiesSelectedItem as CarModel;
 
+            if (car.DriverIds.Contains(driver.Id))
+            {
+                car.DriverIds.Remove(driver.Id);
+
+                _connector.UpdateDocument("Cars", car.Id, car);
+                cmbEditTaxiesDrivers.Text = string.Empty;
+                cmbEditTaxiesDrivers.Items.Remove(comboDriver);
+            }
+            else MessageBox.Show("There no relationship between the car and the driver");
+
+            InitializeLifetimeService();
+        }
+
+        private async Task editDriversTabLeave()
+        {
+            btnAddDriver.Enabled = false;
+
+            Task tsk = Task.Run(() =>
+            {
+                Action act = () => cmbCars.Items.Clear();
+                SafeInvoke(act, cmbCars);
+                act = () => cmbCars.Items.AddRange(_connector.GetAllDocuments<CarModel>("Cars").Select(_ => new ComboCar(_)).ToArray());
+                SafeInvoke(act, cmbCars);
+                act = () => cmbCars.SelectedItem = cmbCars.Items[_rnd.Next(cmbCars.Items.Count - 1)];
+                SafeInvoke(act, cmbCars);
+                act = () => cmbRoutes.Items.Clear();
+                SafeInvoke(act, cmbCars);
+                act = () => cmbRoutes.Items.AddRange(_connector.GetAllDocuments<RouteModel>("Routes").Select(_ => new ComboRoute(_)).ToArray());
+                SafeInvoke(act, cmbCars);
+                act = () => cmbRoutes.SelectedItem = cmbRoutes.Items[_rnd.Next(cmbRoutes.Items.Count - 1)];
+                SafeInvoke(act, cmbCars);
+
+                act = () =>
+                {
+                    _driverCarIDs.Add((cmbCars.SelectedItem as ComboCar).Car.Id);
+                    _driverRouteIDs.Add((cmbRoutes.SelectedItem as ComboRoute).Route.Id);
+                };
+                SafeInvoke(act, this);
+
+            });
+
+            await tsk;
+            if (tsk.IsCompleted) btnAddDriver.Enabled = true;
+        }
+
+        private void btnEditTaxiesAddDriver_Click(object sender, EventArgs e)
+        {
+            var car = _cmbEditTaxiesSelectedItem as CarModel;
+            if(car == null)
+            {
+                MessageBox.Show("קודם בחר מכונית");
+                return;
+            }
+
+            var driver =  (_cmbEditTaxiesDriversAllDriversSelectedItem as ComboDriver).Driver;
+
+            if (!car.DriverIds.Contains(driver.Id))
+            {
+                car.DriverIds.Add(driver.Id);
+                _connector.UpdateDocument("Cars", car.Id, car);
+            }
+            else MessageBox.Show("The driver is already drives the car");
+
+            InitializeLifetimeService();
+        }
     }
 }
